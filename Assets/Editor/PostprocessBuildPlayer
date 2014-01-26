@@ -1,0 +1,42 @@
+#!/usr/bin/env python
+
+import StringIO
+import os
+import subprocess
+import re
+import shutil
+import sys
+import glob
+
+# print(sys.version)
+
+logfile = open('important_log_file.log', 'w+')
+logfile.seek(0)
+logfile.truncate()
+
+def log( *args ):
+	""" Wraps calls to print to output to logfile as well """
+	print(args)
+	for param in args:
+		logfile.write(str(param) + "\n")
+
+# Set the build_script_path to CWD or CWD/Assets/Editor (unity call vs cmd line)
+build_script_path = os.getcwd() + "Assets/Editor" if 'Assets/Editor' not in os.getcwd() else os.getcwd()
+log(build_script_path)
+
+# DEV - When called from command line, fake the command line arguments Unity would pass in
+if len(sys.argv) != 8:
+	sys.argv = ['PostprocessBuildPlayer', '/Users/mgonzalez/SVN/cashslots/trunk/client/exported/ios-build', 'iPhone', 'strip', 'Publishers Clearing House', 'Cash Slots', '1024', '768']
+
+for file in glob.glob(build_script_path+"/PostprocessBuildPlayer_*"):
+	if('.' not in file):
+		file_path = build_script_path+"/"+file
+		log("Calling",file_path)
+		subprocess.call([file_path, sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5], sys.argv[6], sys.argv[7]])
+
+# 	# '/Users/mgonzalez/SVN/cashslots/trunk/client/build/Assets/Editor/PostprocessBuildPlayer', '/Users/mgonzalez/SVN/cashslots/trunk/client/exported/ios-build', 'iPhone', 'strip', 'Publishers Clearing House', 'Cash Slots', '1024', '768'
+# # log('Number of arguments:', len(sys.argv), 'arguments.')
+# # log('Argument List:', str(sys.argv))
+# 	# sys.exit("This script takes exactly 1 argument, the path to the .a file to act on")
+
+logfile.close()
