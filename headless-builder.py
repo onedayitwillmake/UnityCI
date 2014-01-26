@@ -32,7 +32,7 @@ def ios_fix_facebook_paths():
 	new_pbxstring = regex.sub("../../../build/Assets/Facebook/", pbxstring)
 
 	# DEV - print matches
-	log("Looking for matches", regex.pattern)
+	log("Fixing Facebook paths:", regex.pattern)
 	for m in regex.finditer(pbxstring):
 	    log(m.start(), m.group())
 
@@ -41,6 +41,26 @@ def ios_fix_facebook_paths():
 	pbxfile.truncate()
 	pbxfile.write(new_pbxstring)
 	pbxfile.close()
+
+def ios_disable_dsym_format():
+	""" Fix strange issue with facebook paths - not sure what is causing this yet """
+	pbxfile = open(cwd+"/_builds/"+xcode_project_name+'/Unity-iPhone.xcodeproj/project.pbxproj', 'r+')
+	pbxstring = pbxfile.read()
+
+	# Remove extra uneeded backups
+	regex = re.compile('(?<='+re.escape('buildSettings = {')+')'+'.*?(?=})', re.DOTALL)
+	# new_pbxstring = regex.sub('DEBUG_INFORMATION_FORMAT = dwarf', pbxstring)
+
+	# DEV - print matches
+	# log("Disabling dsym:", regex.pattern)
+	for m in regex.finditer(pbxstring):
+	    log(m.start(), m.group())
+
+	# # Overwrite the file
+	# pbxfile.seek(0)
+	# pbxfile.truncate()
+	# pbxfile.write(new_pbxstring)
+	# pbxfile.close()
 
 # def zipdir(path, zip):
 # 	print(path);
@@ -64,12 +84,13 @@ def upload_to_testflight():
 
 # Launch unity builder
 if( sys.argv[1] == "-build"):
-	subprocess.call(['/Applications/Unity/Unity.app/Contents/MacOS/Unity', 
-		'-quit',
-		'-batchmode',
-		'-executeMethod', 'BuilderScript.BuildDevAndProduction', 
-		'-projectPath', cwd])
-	ios_fix_facebook_paths()
+	# subprocess.call(['/Applications/Unity/Unity.app/Contents/MacOS/Unity', 
+	# 	'-quit',
+	# 	'-batchmode',
+	# 	'-executeMethod', 'BuilderScript.BuildDevAndProduction', 
+	# 	'-projectPath', cwd])
+	# ios_fix_facebook_paths()
+	ios_disable_dsym_format()
 else:
 	# make_ipa()
 	upload_to_testflight()
