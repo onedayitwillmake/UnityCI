@@ -62,16 +62,22 @@ def ios_disable_dsym_format():
 	# pbxfile.write(new_pbxstring)
 	# pbxfile.close()
 
-# def zipdir(path, zip):
-# 	print(path);
-#     for root, dirs, files in os.walk(path):
-#         for file in files:
-#             zip.write(os.path.join(root, file))
+def zipdir(path, zip):
+	old_cwd = os.getcwd();
+	os.chdir(os.path.join(path, "../"))
+	for root, dirs, files in os.walk(path):
+		for file in files:
+			print(os.path.relpath(os.path.join(root, file)))
+			zip.write(os.path.relpath(os.path.join(root, file)))
+	os.chdir(old_cwd)
 
-# def make_ipa:
-# 	zipf = zipfile.ZipFile(xcode_project_name+'.ipa', 'w')
-#     zipdir(cwd+"/_builds/"+xcode_project_name+'/bin/UnityCI.app', zipf)
-#     zipf.close()
+def make_ipa():
+	local_cwd = cwd+"/_builds/"+xcode_project_name+'/bin/'
+	app_name = xcode_project_name.replace("_xcode", "")
+
+	zipf = zipfile.ZipFile(local_cwd+app_name+'.zip', 'w')
+	zipdir(local_cwd+'Payload', zipf)
+	zipf.close()
 
 def upload_to_testflight():
 	subprocess.call(['curl', 
@@ -90,7 +96,7 @@ if( sys.argv[1] == "-build"):
 	# 	'-executeMethod', 'BuilderScript.BuildDevAndProduction', 
 	# 	'-projectPath', cwd])
 	# ios_fix_facebook_paths()
-	ios_disable_dsym_format()
+	# ios_disable_dsym_format()
 else:
-	# make_ipa()
-	upload_to_testflight()
+	make_ipa()
+	# upload_to_testflight()
