@@ -75,7 +75,7 @@ def make_ipa():
 	local_cwd = cwd+"/_builds/"+xcode_project_name+'/bin/'
 	app_name = xcode_project_name.replace("_xcode", "")
 
-	zipf = zipfile.ZipFile(local_cwd+app_name+'.zip', 'w')
+	zipf = zipfile.ZipFile(local_cwd+app_name+'.ipa', 'w')
 	zipdir(local_cwd+'Payload', zipf)
 	zipf.close()
 
@@ -100,4 +100,4 @@ if( sys.argv[1] == "-build"):
 	print("Skipping build...")
 else:
 	make_ipa()
-	# upload_to_testflight()
+	upload_to_testflight()
