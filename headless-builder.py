@@ -97,6 +97,7 @@ if( sys.argv[1] == "-build"):
 	# 	'-projectPath', cwd])
 	# ios_fix_facebook_paths()
 	# ios_disable_dsym_format()
+	print("Skipping build...")
 else:
 	make_ipa()
 	# upload_to_testflight()
