@@ -11,7 +11,10 @@ import zipfile
 
 xcode_project_name = 'UnityCI_xcode';
 cwd = os.path.dirname(os.path.realpath(__file__))  # Note we can't use getcwd() because this file will be called from places other than it's own directory
+
 build_cwd = cwd+"/_builds/"+xcode_project_name+'/bin/';
+app_name = xcode_project_name.replace("_xcode", "")
+
 
 logfile = open('headless-builder.log', 'w+')
 logfile.seek(0)
@@ -73,8 +76,6 @@ def zipdir(path, zip):
 	os.chdir(old_cwd)
 
 def make_ipa():
-	app_name = xcode_project_name.replace("_xcode", "")
-
 	zipf = zipfile.ZipFile(build_cwd+app_name+'.ipa', 'w')
 	zipdir(build_cwd+'Payload', zipf)
 	zipf.close()
