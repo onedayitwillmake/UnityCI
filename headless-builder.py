@@ -63,7 +63,7 @@ def upload_to_testflight():
 		'-F', "notify=False"])
 
 # Launch unity builder
-if( sys.argv[1] == "-upload"):
+if( sys.argv[1] == "-build"):
 	subprocess.call(['/Applications/Unity/Unity.app/Contents/MacOS/Unity', 
 		'-quit',
 		'-batchmode',
