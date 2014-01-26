@@ -53,7 +53,7 @@ def ios_fix_facebook_paths():
 #     zipdir(cwd+"/_builds/"+xcode_project_name+'/bin/UnityCI.app', zipf)
 #     zipf.close()
 
-def upload_to_testflight:
+def upload_to_testflight():
 	subprocess.call(['curl', 
 		'http://testflightapp.com/api/builds.json',
 		'-F', 'file=@UnityCI.ipa',
