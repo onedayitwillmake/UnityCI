@@ -23,7 +23,7 @@ def log( *args ):
 
 def ios_fix_facebook_paths():
 	""" Fix strange issue with facebook paths - not sure what is causing this yet """
-	pbxfile = open(cwd+xcode_project_name+'/Unity-iPhone.xcodeproj/project.pbxproj', 'r+')
+	pbxfile = open(cwd+"_builds"+xcode_project_name+'/Unity-iPhone.xcodeproj/project.pbxproj', 'r+')
 	pbxstring = pbxfile.read()
 
 	# Remove extra uneeded backups
