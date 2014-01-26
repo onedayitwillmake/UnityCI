@@ -41,7 +41,7 @@ def ios_fix_facebook_paths():
 	pbxfile.write(new_pbxstring)
 	pbxfile.close()
 
-print(sys.argv[0])
+print(sys.argv[1])
 
 #curl http://testflightapp.com/api/builds.json -F file=@UnityCI.ipa -F api_token='58fcc2ee02546d6fe43389734d83d406_MTI0OTA2MDIwMTMtMDgtMjAgMTA6Mzk6MzEuODg1ODcy' -F team_token='2f2b8d10daec740a15818a57edc26e28_MjYxODc4MjAxMy0wOC0yMCAxMDo0MToyNC43NjExNDk'  -F notes='This build was uploaded via the upload API'  -F notify=False 
 
