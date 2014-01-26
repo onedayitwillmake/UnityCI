@@ -11,6 +11,7 @@ import zipfile
 
 xcode_project_name = 'UnityCI_xcode';
 cwd = os.path.dirname(os.path.realpath(__file__))  # Note we can't use getcwd() because this file will be called from places other than it's own directory
+build_cwd = cwd+"/_builds/"+xcode_project_name+'/bin/';
 
 logfile = open('headless-builder.log', 'w+')
 logfile.seek(0)
@@ -72,17 +73,17 @@ def zipdir(path, zip):
 	os.chdir(old_cwd)
 
 def make_ipa():
-	local_cwd = cwd+"/_builds/"+xcode_project_name+'/bin/'
 	app_name = xcode_project_name.replace("_xcode", "")
 
-	zipf = zipfile.ZipFile(local_cwd+app_name+'.ipa', 'w')
-	zipdir(local_cwd+'Payload', zipf)
+	zipf = zipfile.ZipFile(build_cwd+app_name+'.ipa', 'w')
+	zipdir(build_cwd+'Payload', zipf)
 	zipf.close()
 
 def upload_to_testflight():
+	print("Uploading IPA:"+'file=@'+build_cwd+app_name+'.ipa');
 	subprocess.call(['curl', 
 		'http://testflightapp.com/api/builds.json',
-		'-F', 'file=@UnityCI.ipa',
+		'-F', 'file=@'+build_cwd+app_name+'.ipa',
 		'-F', "api_token='58fcc2ee02546d6fe43389734d83d406_MTI0OTA2MDIwMTMtMDgtMjAgMTA6Mzk6MzEuODg1ODcy'",
 		'-F', "team_token='2f2b8d10daec740a15818a57edc26e28_MjYxODc4MjAxMy0wOC0yMCAxMDo0MToyNC43NjExNDk'",
 		'-F', "notes='This build was uploaded via the upload API'",
