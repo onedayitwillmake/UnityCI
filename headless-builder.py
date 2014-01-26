@@ -42,16 +42,16 @@ def ios_fix_facebook_paths():
 	pbxfile.write(new_pbxstring)
 	pbxfile.close()
 
-def zipdir(path, zip):
-	print(path);
-    for root, dirs, files in os.walk(path):
-        for file in files:
-            zip.write(os.path.join(root, file))
+# def zipdir(path, zip):
+# 	print(path);
+#     for root, dirs, files in os.walk(path):
+#         for file in files:
+#             zip.write(os.path.join(root, file))
 
-def make_ipa:
-	zipf = zipfile.ZipFile(xcode_project_name+'.ipa', 'w')
-    zipdir(cwd+"/_builds/"+xcode_project_name+'/bin/UnityCI.app', zipf)
-    zipf.close()
+# def make_ipa:
+# 	zipf = zipfile.ZipFile(xcode_project_name+'.ipa', 'w')
+#     zipdir(cwd+"/_builds/"+xcode_project_name+'/bin/UnityCI.app', zipf)
+#     zipf.close()
 
 def upload_to_testflight:
 	subprocess.call(['curl', 
@@ -71,5 +71,5 @@ if( sys.argv[1] == "-upload"):
 		'-projectPath', cwd])
 	ios_fix_facebook_paths()
 else:
-	make_ipa()
+	# make_ipa()
 	upload_to_testflight()
