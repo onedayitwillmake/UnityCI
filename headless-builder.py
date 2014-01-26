@@ -82,13 +82,16 @@ def make_ipa():
 
 def upload_to_testflight():
 	print("Uploading IPA:"+'file=@'+build_cwd+app_name+'.ipa');
-	subprocess.call(['curl', 
+	arguments = ['curl', 
 		'http://testflightapp.com/api/builds.json',
 		'-F', 'file=@'+build_cwd+app_name+'.ipa',
-		'-F', "api_token='58fcc2ee02546d6fe43389734d83d406_MTI0OTA2MDIwMTMtMDgtMjAgMTA6Mzk6MzEuODg1ODcy'",
-		'-F', "team_token='2f2b8d10daec740a15818a57edc26e28_MjYxODc4MjAxMy0wOC0yMCAxMDo0MToyNC43NjExNDk'",
+		'-F', "api_token=58fcc2ee02546d6fe43389734d83d406_MTI0OTA2MDIwMTMtMDgtMjAgMTA6Mzk6MzEuODg1ODcy",
+		'-F', "team_token=2f2b8d10daec740a15818a57edc26e28_MjYxODc4MjAxMy0wOC0yMCAxMDo0MToyNC43NjExNDk",
+		'-F', "app_token='4e222703-fde0-4951-91f4-428f7a3e9ad2'",
 		'-F', "notes='This build was uploaded via the upload API'",
-		'-F', "notify=False"])
+		'-F', "notify=False"];
+	print(arguments)
+	subprocess.call(arguments)
 
 # Launch unity builder
 if( sys.argv[1] == "-build"):
