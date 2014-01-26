@@ -1,9 +1,8 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/CI/Editor/BuilderScript.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/DevProdLabel.cs">
     <Files>
-      <File FileName="Assets/CI/Editor/README.txt" Line="57" Column="71" />
-      <File FileName="Assets/CI/Editor/BuilderScript.cs" Line="9" Column="2" />
+      <File FileName="Assets/Scripts/DevProdLabel.cs" Line="12" Column="18" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

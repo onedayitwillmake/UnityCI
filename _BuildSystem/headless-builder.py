@@ -10,7 +10,7 @@ import glob
 import zipfile
 
 xcode_project_name = 'UnityCI_xcode';
-cwd = os.path.dirname(os.path.realpath(__file__))  # Note we can't use getcwd() because this file will be called from places other than it's own directory
+cwd = os.path.dirname(os.path.realpath(__file__+"../"))  # Note we can't use getcwd() because this file will be called from places other than it's own directory
 
 build_cwd = cwd+"/_builds/"+xcode_project_name+'/bin/';
 app_name = xcode_project_name.replace("_xcode", "")
@@ -95,14 +95,13 @@ def upload_to_testflight():
 
 # Launch unity builder
 if( sys.argv[1] == "-build"):
-	# subprocess.call(['/Applications/Unity/Unity.app/Contents/MacOS/Unity', 
-	# 	'-quit',
-	# 	'-batchmode',
-	# 	'-executeMethod', 'BuilderScript.BuildDevAndProduction', 
-	# 	'-projectPath', cwd])
-	# ios_fix_facebook_paths()
-	# ios_disable_dsym_format()
-	print("Skipping build...")
+	subprocess.call(['/Applications/Unity/Unity.app/Contents/MacOS/Unity', 
+		'-quit',
+		'-batchmode',
+		'-executeMethod', 'BuilderScript.BuildDevAndProduction', 
+		'-projectPath', cwd])
+	ios_fix_facebook_paths()
+	ios_disable_dsym_format()
 else:
 	make_ipa()
 	upload_to_testflight()
